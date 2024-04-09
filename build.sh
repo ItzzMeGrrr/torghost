@@ -12,7 +12,9 @@ else
     echo [ERROR] Build failed. Unable to generate C code using cython3
     exit 1
 fi
-gcc -Os -I /usr/include/python3.8 -o torghost torghost.c -lpython3.8 -lpthread -lm -lutil -ldl
+python_version=$(python3 -c 'import sys; print("{}.{}".format(sys.version_info.major, sys.version_info.minor))')
+echo "Using python$python_version"
+gcc -Os -I /usr/include/python${python_version} -o torghost torghost.c -lpython${python_version} -lpthread -lm -lutil -ldl
 if [ $? -eq 0 ]; then
     echo [SUCCESS] Compiled to static binay 
 else
